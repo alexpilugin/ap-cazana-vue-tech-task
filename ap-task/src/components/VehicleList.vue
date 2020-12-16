@@ -2,17 +2,44 @@
   <section>
     <h2>List of Vehicles</h2>
     <h2 v-if="hasVehicles">It has Vehicles</h2>
-    <button class="reg-btn">Register a new Vehicle</button>
+    <button class="reg-btn" @click="regNewVehicle()">Register a new Vehicle</button>
   </section>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+const { v4 } = require('uuid');
+
 export default {
   name: "VehicleList",
   computed: {
-    ...mapGetters(["hasVehicles"]),
+    ...mapGetters([
+      "hasVehicles",
+      "getVehicles"
+    ]),
   },
+  methods: {
+    ...mapActions([
+      "register"
+    ]),
+    regNewVehicle() {
+      let regEvent = {
+        eventTitle: 'First Registration',
+        eventType: 'registration',
+        eventDate: new Date(),
+        eventInfo: {
+          id: v4(),
+          vehicle: 'new vehicle',
+          vrm: 'VRM',
+          madeByBrand: 'BRAND',
+          model: 'MODEL',
+          year: 'YEAR'
+        }
+      }
+      console.log(regEvent);
+      this.register(regEvent)
+    }
+  }
 };
 </script>
 
@@ -29,6 +56,7 @@ export default {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   color: #37B48C;
+  background: transparent;
   text-align: center;
   transition: all 0.2s;
 }
