@@ -6,14 +6,23 @@
           <h1>Technical Task for Cazana</h1>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm">
+          <VehicleList />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-//import HelloWorld from "@/components/HelloWorld.vue";
+import VehicleList from "@/components/VehicleList.vue";
+//import { mapState, mapGetters } from 'vuex'
 export default {
-  name: "Home"
+  name: "Home",
+  components: {
+    VehicleList
+  }
 };
 </script>

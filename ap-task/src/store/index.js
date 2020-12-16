@@ -11,6 +11,9 @@ export default new Vuex.Store({
   },
   getters: {
     getVehicles: state => state.vehicles,
+    hasVehicles: state => {
+      return state.vehicles.length && state.vehicles.length > 0
+    },
     getVehicleById: state => {
       const vehicles =
         state.vehicles.length && state.vehicles.length > 0
