@@ -1,16 +1,18 @@
 <template>
   <div class="home">
     <div class="container">
+      <!--
       <div class="row">
         <div class="col-sm">
           <h1>Technical Task for Cazana</h1>
         </div>
       </div>
+      -->
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
           <VehicleList @onShowInfo="showInfoCard"/>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-7">
           <VehicleCard v-if="id" :id="id" />
         </div>
       </div>

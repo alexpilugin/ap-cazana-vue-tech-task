@@ -9,12 +9,12 @@
         @click="showInfo(v.id)"
       >
         <span class="listNumber">{{ i+1 }}</span>
-        <span><b>[{{ v.events[0].eventInfo.vrm }}]  </b></span>
         <span style="color:#37B48C;">{{ v.events[0].eventInfo.vehicle }}</span>
+        <span class="numberplate"><b>{{ v.events[0].eventInfo.vrm }}</b></span>
       </li>
     </ol>
     <button class="reg-btn" @click="regNewVehicle()">Register a new Vehicle</button>
-    <RegistrationForm :active="showForm" @onSubmit="showForm = false"/>
+    <RegistrationForm :active="showForm" @hide="showForm = false"/>
   </section>
 </template>
 
@@ -57,6 +57,7 @@ export default {
 .vehicle-list {
   float: left;
   text-align: left;
+  width: 100%;
 }
 .listNumber {
   margin-right: 15px;
@@ -72,10 +73,18 @@ export default {
 }
 .vehicle-list-item {
   cursor: pointer;
+  margin-bottom: 8px;
 }
 .vehicle-list-item:hover {
   font-weight: bold;  
   color: black;
+}
+.numberplate {
+  padding: 0px 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  margin-left: 5px;
+  float: right;
 }
 
 .reg-btn {
@@ -83,7 +92,7 @@ export default {
   display: inline-block;
   padding: 0.35em 1.2em;
   border: 0.1em solid #37B48C;
-  margin: 0 0.3em 0.3em 0;
+  margin: 0 0.3em 20px 0;
   border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;

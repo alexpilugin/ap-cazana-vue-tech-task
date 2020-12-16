@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 const devMode = process.env.NODE_ENV === "development";
 
+const milesPerAnnum = 7900;
+const milesPerDay = milesPerAnnum / 365;
+
 export default new Vuex.Store({
   state: {
     vehicles: []
   },
   getters: {
+    defaultMilesPerDay: () => milesPerDay,
     getVehicles: state => state.vehicles,
     hasVehicles: state => {
       return state.vehicles.length && state.vehicles.length > 0
