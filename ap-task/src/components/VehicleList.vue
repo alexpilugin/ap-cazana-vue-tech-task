@@ -1,17 +1,38 @@
 <template>
-  <section>
-    <h2>List of Vehicles</h2>
-    <h2 v-if="hasVehicles">It has Vehicles</h2>
+  <section class="vehicle-list">
+    <h2 v-if="hasVehicles">List of Vehicles</h2>
+    <ol v-if="hasVehicles">
+      <li 
+        v-for="(v, i) in getVehicles" 
+        :key="v.id" 
+        class="vehicle-list-item"
+        @click="showInfo(v.id)"
+      >
+        <span class="listNumber">{{ i+1 }}</span>
+        <span><b>[{{ v.events[0].eventInfo.vrm }}]  </b></span>
+        <span style="color:#37B48C;">{{ v.events[0].eventInfo.vehicle }}</span>
+      </li>
+    </ol>
     <button class="reg-btn" @click="regNewVehicle()">Register a new Vehicle</button>
+    <RegistrationForm :active="showForm" @onSubmit="showForm = false"/>
   </section>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-const { v4 } = require('uuid');
+import { mapGetters } from "vuex";
+import RegistrationForm from "@/components/RegistrationForm.vue";
+
 
 export default {
   name: "VehicleList",
+  components: {
+    RegistrationForm
+  },
+  data() {
+    return {
+      showForm: false
+    }
+  },
   computed: {
     ...mapGetters([
       "hasVehicles",
@@ -19,31 +40,44 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions([
-      "register"
-    ]),
     regNewVehicle() {
-      let regEvent = {
-        eventTitle: 'First Registration',
-        eventType: 'registration',
-        eventDate: new Date(),
-        eventInfo: {
-          id: v4(),
-          vehicle: 'new vehicle',
-          vrm: 'VRM',
-          madeByBrand: 'BRAND',
-          model: 'MODEL',
-          year: 'YEAR'
-        }
-      }
-      console.log(regEvent);
-      this.register(regEvent)
+      this.showForm = true;
+    },
+    getInfo(vehicle) {
+      return vehicle.events[0].eventInfo
+    },
+    showInfo(id) {
+      this.$emit('onShowInfo', id)
     }
   }
 };
 </script>
 
 <style lang="css">
+.vehicle-list {
+  float: left;
+  text-align: left;
+}
+.listNumber {
+  margin-right: 15px;
+  display: inline-block;
+  font-weight: bold;
+  width: 1.6rem;
+  height: 1.6rem;
+  text-align: right;
+}
+.vehicle-list ol {
+  list-style: none;
+  padding-inline-start: 0;
+}
+.vehicle-list-item {
+  cursor: pointer;
+}
+.vehicle-list-item:hover {
+  font-weight: bold;  
+  color: black;
+}
+
 .reg-btn {
   cursor: pointer;
   display: inline-block;
