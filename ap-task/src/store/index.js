@@ -36,19 +36,21 @@ export default new Vuex.Store({
   mutations: {
     addVehicle(state, info) {
       state.vehicles.push({
-        id: info.eventInfo.id,
+        id: info.eventInfo.vehicleId,
         events: [info]
       });
       if (devMode) {
-        console.log(`mutation: addVehicle: ${info.eventInfo.id}`);
+        console.log(`mutation: addVehicle: ${info.eventInfo.vehicleId}`);
       }
     },
     addEvent(state, payload) {
       const vehicles = state.vehicles;
-      const selected = vehicles.find(v => v.id === payload.id);
+      const selected = vehicles.find(v => v.id === payload.event.eventInfo.vehicleId);
       selected.events.push(payload.event);
       if (devMode) {
-        console.log(`mutation: addEvent: ${payload.event.eventType}`);
+        //console.log(`mutation: addEvent: ${payload.event.eventType}`);
+        console.log(`mutation: addEvent:`)
+        console.log(`${payload}`)
       }
     }
   },

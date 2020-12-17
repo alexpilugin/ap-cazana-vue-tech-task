@@ -151,7 +151,7 @@ export default {
         eventType: "registration",
         eventDate: moment(this.regDate),
         eventInfo: {
-          id: v4(),
+          vehicleId: v4(),
           vehicle: this.vehicle,
           vrm: this.vrm,
           madeByBrand: this.maker,

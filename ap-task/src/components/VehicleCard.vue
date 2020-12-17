@@ -6,7 +6,10 @@
           <h2 style="color:#37B48C;">{{ info.vehicle }}</h2>  
         </div>
         <div class="col-12 col-md-4 aligh-right">
-          <h3><span class="plain">VRM:</span> {{ info.vrm }}</h3>        
+          <h3>
+            <span class="plain">VRM:</span> 
+            <span class="numberplate">{{ info.vrm }}</span>
+          </h3>        
         </div>
       </div>
       <div class="row">
@@ -25,35 +28,22 @@
       <div class="row">
         <div class="col-12 aligh-left">
           <h3 class="events-header">
-            <span>Events</span>
+            <span>History</span>
             <button class="add-btn" @click="addEvent()">Add a New Event</button>
           </h3>          
           <table style="width: 100%;">
             <tr>
               <th><span>Name</span></th>
-              <th><span class="info">When</span></th>
-              <th><span class="info">Days ago</span></th>
-              <th><span class="info">Mileage</span></th>
+              <th><span>When</span></th>
+              <th><span>Days ago</span></th>
+              <th><span>Mileage</span></th>
             </tr>
-            <tr v-for="e in events" :key="e.id">
-              <td>
-                <span>{{ e.eventTitle }}</span>
-              </td>
-              <td>
-                <span class="info">{{ formatDate(e.eventDate) }}</span>
-              </td>
-              <td>
-                <span class="info">{{ fromNow(e.eventDate) }}</span>
-              </td>
-              <td>
-                <span class="info">{{ mileageFromNow(e.eventDate) }}</span>
-              </td>
-            </tr>
+            <MyTableRow v-for="e in events" :key="e.id" :event="e" />
           </table>
         </div>
       </div>
     </div>
-    <NewEventForm :active="showForm" @hide="showForm = false"/>
+    <NewEventForm :active="showForm" :id="id" @hide="showForm = false"/>
   </section>
 </template>
 
@@ -61,12 +51,14 @@
 import { mapGetters } from "vuex";
 import moment from "moment";
 import NewEventForm from "@/components/NewEventForm.vue";
+import MyTableRow from "@/components/MyTableRow.vue";
 
 export default {
   name: "VehicleCard",
   props: ["id"],
   components: {
-    NewEventForm
+    NewEventForm,
+    MyTableRow
   },
   data() {
     return {
@@ -110,7 +102,6 @@ export default {
       return Math.round(days * this.defaultMilesPerDay).toLocaleString() // .toFixed(2)
     },
     addEvent() {
-      console.log("add Event")
       this.showForm = true;
     }
   }
@@ -155,6 +146,13 @@ span.info {
 }
 .events-header {
   padding-top: 20px;
+}
+.numberplate {
+  padding: 0px 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  margin-left: 5px;
+  float: right;
 }
 .add-btn {
   cursor: pointer;
