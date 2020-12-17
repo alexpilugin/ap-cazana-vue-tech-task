@@ -20,7 +20,7 @@
         </tr>
         <tr>
           <td colspan="2">
-            <label for="eventType"><h4>{{ selectedEventTitle }}</h4></label>
+            <h4 style="color:white;">{{ selectedEventTitle }}</h4>
           </td>
         </tr>
         <tr v-if="selectedEventTitle">
@@ -71,8 +71,8 @@
           </td>
         </tr>
         <tr v-if="selectedEventTitle == eventTypes[0].title">
-          <td> <button @click.prevent="cancel()">Cancel</button></td>
-          <td> <button @click.prevent="saveAdEvent()">Save</button></td>
+          <td> <button class="cancel" @click.prevent="cancel()">Cancel</button></td>
+          <td> <button class="submit" @click.prevent="saveAdEvent()">Save</button></td>
         </tr>
 
         <!-- MOT -->
@@ -94,33 +94,33 @@
           </td>
         </tr>
         <tr v-if="selectedEventTitle == eventTypes[1].title">
-          <td>
+          <td style="padding-top: 10px;">
             <label for="checkbox">Result</label>
           </td>
-          <td>
+          <td style="padding-top: 10px;">
             <input type="radio" id="pass" value="pass" v-model="motEvent.result">
-            <label for="pass">pass</label>
+            <span>pass</span>
             <input type="radio" id="fail" value="fail" style="margin-left: 15px;" v-model="motEvent.result">
-            <label for="fail">fail</label>
+            <span>fail</span>
           </td>
         </tr>
         <tr v-if="selectedEventTitle == eventTypes[1].title">
-          <td> <button @click.prevent="cancel()">Cancel</button></td>
-          <td> <button @click.prevent="saveMotEvent()">Save</button></td>
+          <td> <button class="cancel" @click.prevent="cancel()">Cancel</button></td>
+          <td> <button class="submit" @click.prevent="saveMotEvent()">Save</button></td>
         </tr>
 
         <!-- the numberplate changes -->
         <tr v-if="selectedEventTitle == eventTypes[2].title">
           <td>
-            <span>Previous VRM</span>
+            <label><span>Previous VRM</span></label>
           </td>
           <td>
-            <span>{{ getLastVRM() }}</span>
+            <span><b>{{ getLastVRM() }}</b></span>
           </td>
         </tr>
         <tr v-if="selectedEventTitle == eventTypes[2].title">
           <td>
-            <span>New VRM</span>
+            <label><span>New VRM</span></label>
           </td>
           <td>
             <input
@@ -134,8 +134,8 @@
         </tr>
 
         <tr v-if="selectedEventTitle == eventTypes[2].title">
-          <td> <button @click.prevent="cancel()">Cancel</button></td>
-          <td> <button @click.prevent="saveVRMEvent()">Save</button></td>
+          <td> <button class="cancel" @click.prevent="cancel()">Cancel</button></td>
+          <td> <button class="submit" @click.prevent="saveVRMEvent()">Save</button></td>
         </tr>
       </table>
     </form>
@@ -267,5 +267,26 @@ export default {
   border: solid 2px white;
   border-radius: 4px;
   background-color: #37b48c;
+}
+.event-form label {
+  display: block;
+  color: white;
+  text-align: right;
+  padding-right: 10px;
+}
+.event-form table td {
+  text-align: center;
+  vertical-align: middle;
+}
+.cancel,
+.submit {
+  float: right;
+  padding: 5px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 100%;
+}
+.cancel {
+  margin-right: 10px;
 }
 </style>

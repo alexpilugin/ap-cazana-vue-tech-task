@@ -5,6 +5,7 @@
   "author": "Alex Pilugin",
   "license": "ISC",
   "scripts": {
+    "setup": "cd ./ap-task && npm i",
     "start": "cd ./ap-task && npm run serve",
     "serve": "cd ./ap-task && npm run serve",
     "build": "cd ./ap-task && npm run build",
