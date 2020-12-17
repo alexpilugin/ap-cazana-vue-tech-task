@@ -37,6 +37,7 @@
               <th><span>When</span></th>
               <th><span>Days ago</span></th>
               <th><span>Mileage</span></th>
+              <th><span>Annual</span></th>
             </tr>
             <MyTableRow v-for="e in events" :key="e.id" :event="e" />
           </table>

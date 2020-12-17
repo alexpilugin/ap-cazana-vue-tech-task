@@ -38,6 +38,7 @@
             />
           </td>
         </tr>
+
         <!-- ad -->
         <tr v-if="selectedEventTitle == eventTypes[0].title">
           <td>
@@ -103,24 +104,38 @@
             <label for="fail">fail</label>
           </td>
         </tr>
-
         <tr v-if="selectedEventTitle == eventTypes[1].title">
           <td> <button @click.prevent="cancel()">Cancel</button></td>
           <td> <button @click.prevent="saveMotEvent()">Save</button></td>
         </tr>
 
-
-
-
+        <!-- the numberplate changes -->
         <tr v-if="selectedEventTitle == eventTypes[2].title">
-          <td colspan="2">
-            <label for="eventType"><h4>{{ selectedEventTitle }}</h4></label>
+          <td>
+            <span>Previous VRM</span>
+          </td>
+          <td>
+            <span>{{ getLastNumberPlate() }}</span>
+          </td>
+        </tr>
+        <tr v-if="selectedEventTitle == eventTypes[2].title">
+          <td>
+            <span>New VRM</span>
+          </td>
+          <td>
+            <input
+              type="text"
+              id="vrm"
+              name="vrm"
+              style="width: 100%"
+              v-model="vrmChangeEvent.toVRM"
+            />
           </td>
         </tr>
 
         <tr v-if="selectedEventTitle == eventTypes[2].title">
           <td> <button @click.prevent="cancel()">Cancel</button></td>
-          <td> <button @click.prevent="saveAdEvent()">Save</button></td>
+          <td> <button @click.prevent="saveVRMEvent()">Save</button></td>
         </tr>
       </table>
     </form>
@@ -128,7 +143,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
 import ModalScreen from "@/components/ModalScreen.vue";
 
@@ -172,8 +187,30 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      "getVehicleById"
+    ]),
+  },
   methods: {
     ...mapActions(["addEvent"]),
+    getLastNumberPlate() {
+      const VRMchangeCode = 2;
+      const vId = this.id;
+      const events = this.getVehicleById(vId).events;
+      const regVRM = events[0].eventInfo.vrm;
+      console.log("regVRM: " + regVRM);
+      let lastVRMchangeEvent = null;
+      for (var i = events.length - 1; i >= 0; i--) {
+        const eventType = events[i].eventType;
+        if (eventType === this.eventTypes[VRMchangeCode].type) {
+          lastVRMchangeEvent = events[i];
+          break; //stop searching  
+        }
+      }
+      if (lastVRMchangeEvent) console.log("last VRM: " + lastVRMchangeEvent.eventInfo.toVRM);
+      return lastVRMchangeEvent ? lastVRMchangeEvent.eventInfo.toVRM : regVRM;
+    },
     reset() {
       this.selectedEventTitle = null;
       this.adEvent = {
@@ -210,6 +247,22 @@ export default {
           vehicleId: this.id,
           mileage: this.motEvent.mileage,
           result: this.motEvent.result,
+        }
+      }
+      this.addEvent({event: newEvent})
+      this.reset()
+      this.$emit('hide')
+    },
+    saveVRMEvent() {
+      console.log("saveVRMEvent...")
+      const newEvent = {
+        eventTitle: this.eventTypes[2].title,
+        eventType: this.eventTypes[2].type,
+        eventDate: this.eventDate,
+        eventInfo: {
+          vehicleId: this.id,
+          fromVRM: this.getLastNumberPlate(),
+          toVRM: this.vrmChangeEvent.toVRM,
         }
       }
       this.addEvent({event: newEvent})

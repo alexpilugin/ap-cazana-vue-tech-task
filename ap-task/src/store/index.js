@@ -13,6 +13,7 @@ export default new Vuex.Store({
     vehicles: []
   },
   getters: {
+    defaultMilesPerAnnum: () => milesPerAnnum,
     defaultMilesPerDay: () => milesPerDay,
     getVehicles: state => state.vehicles,
     hasVehicles: state => {
