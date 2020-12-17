@@ -106,7 +106,7 @@ export default {
   name: "RegistrationForm",
   props: ["active"],
   components: {
-    ModalScreen,
+    ModalScreen
   },
   data() {
     return {
@@ -118,12 +118,14 @@ export default {
       mileage: 0,
       regDate: moment().format("YYYY-MM-DD"), // '2017-07-04',
       today: moment().format("YYYY-MM-DD"), // '2020-12-16'
-      year: new Date().getFullYear(),
+      year: new Date().getFullYear()
     };
   },
   watch: {
     regDate(value) {
-      this.year = moment(value).toDate().getFullYear()
+      this.year = moment(value)
+        .toDate()
+        .getFullYear();
     }
   },
   methods: {
@@ -157,16 +159,16 @@ export default {
           madeByBrand: this.maker,
           model: this.model,
           mileage: this.mileage,
-          year: this.year,
-        },
+          year: this.year
+        }
       };
       console.log(regEvent);
       this.register(regEvent);
       this.show = false;
       this.$emit("hide");
       this.reset();
-    },
-  },
+    }
+  }
 };
 </script>
 

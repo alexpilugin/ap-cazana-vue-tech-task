@@ -13,8 +13,8 @@ export default {
   props: ["active"],
   data() {
     return {
-      show: false,
-    }
+      show: false
+    };
   },
   created() {
     this.show = this.active;
@@ -22,9 +22,9 @@ export default {
   watch: {
     active(value) {
       this.show = value;
-    },
-  },
-}
+    }
+  }
+};
 </script>
 
 <style scopped>

@@ -2,26 +2,29 @@
   <section class="vehicle-list">
     <h2 v-if="hasVehicles">List of Vehicles</h2>
     <ol v-if="hasVehicles">
-      <li 
-        v-for="(v, i) in getVehicles" 
-        :key="v.id" 
+      <li
+        v-for="(v, i) in getVehicles"
+        :key="v.id"
         class="vehicle-list-item"
         @click="showInfoCard(v.id)"
       >
-        <span class="listNumber">{{ i+1 }}</span>
+        <span class="listNumber">{{ i + 1 }}</span>
         <span style="color:#37B48C;">{{ v.events[0].eventInfo.vehicle }}</span>
-        <span class="numberplate"><b>{{ v.vrm }}</b></span>
+        <span class="numberplate"
+          ><b>{{ v.vrm }}</b></span
+        >
       </li>
     </ol>
-    <button class="reg-btn" @click="regNewVehicle()">Register a new Vehicle</button>
-    <RegistrationForm :active="showForm" @hide="showForm = false"/>
+    <button class="reg-btn" @click="regNewVehicle()">
+      Register a new Vehicle
+    </button>
+    <RegistrationForm :active="showForm" @hide="showForm = false" />
   </section>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import RegistrationForm from "@/components/RegistrationForm.vue";
-
 
 export default {
   name: "VehicleList",
@@ -31,23 +34,20 @@ export default {
   data() {
     return {
       showForm: false
-    }
+    };
   },
   computed: {
-    ...mapGetters([
-      "hasVehicles",
-      "getVehicles"
-    ]),
+    ...mapGetters(["hasVehicles", "getVehicles"])
   },
   methods: {
     regNewVehicle() {
       this.showForm = true;
     },
     getInfo(vehicle) {
-      return vehicle.events[0].eventInfo
+      return vehicle.events[0].eventInfo;
     },
     showInfoCard(id) {
-      this.$emit('onShowInfo', id)
+      this.$emit("onShowInfo", id);
     }
   }
 };
@@ -76,7 +76,7 @@ export default {
   margin-bottom: 8px;
 }
 .vehicle-list-item:hover {
-  font-weight: bold;  
+  font-weight: bold;
   color: black;
 }
 .numberplate {
@@ -91,23 +91,23 @@ export default {
   cursor: pointer;
   display: inline-block;
   padding: 0.35em 1.2em;
-  border: 0.1em solid #37B48C;
+  border: 0.1em solid #37b48c;
   margin: 0 0.3em 20px 0;
   border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  color: #37B48C;
+  color: #37b48c;
   background: transparent;
   text-align: center;
   transition: all 0.2s;
 }
-.reg-btn:hover{
-  color:white;
-  background-color:#37B48C;
+.reg-btn:hover {
+  color: white;
+  background-color: #37b48c;
 }
-@media all and (max-width:30em){
+@media all and (max-width: 30em) {
   .reg-btn {
     display: block;
     margin: 0.4em auto;

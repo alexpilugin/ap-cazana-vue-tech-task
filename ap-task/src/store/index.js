@@ -17,7 +17,7 @@ export default new Vuex.Store({
     defaultMilesPerDay: () => milesPerDay,
     getVehicles: state => state.vehicles,
     hasVehicles: state => {
-      return state.vehicles.length && state.vehicles.length > 0
+      return state.vehicles.length && state.vehicles.length > 0;
     },
     getVehicleById: state => {
       const vehicles =
@@ -35,9 +35,9 @@ export default new Vuex.Store({
     },
     getLastNumberPlate: state => {
       const vehicles =
-      state.vehicles.length && state.vehicles.length > 0
-        ? state.vehicles
-        : undefined;
+        state.vehicles.length && state.vehicles.length > 0
+          ? state.vehicles
+          : undefined;
       function getById(id) {
         if (vehicles) {
           const selected = vehicles.find(v => v.id === id); // first found
@@ -46,12 +46,14 @@ export default new Vuex.Store({
           let lastVRMchangeEvent = null;
           for (var i = events.length - 1; i >= 0; i--) {
             const eventType = events[i].eventType;
-            if (eventType === 'vrm-change') {
+            if (eventType === "vrm-change") {
               lastVRMchangeEvent = events[i];
-              break; //stop searching  
+              break; //stop searching
             }
           }
-          return lastVRMchangeEvent ? lastVRMchangeEvent.eventInfo.toVRM : regVRM;
+          return lastVRMchangeEvent
+            ? lastVRMchangeEvent.eventInfo.toVRM
+            : regVRM;
         }
       }
       // return a closure function:
@@ -71,15 +73,17 @@ export default new Vuex.Store({
     },
     addEvent(state, payload) {
       const vehicles = state.vehicles;
-      const selected = vehicles.find(v => v.id === payload.event.eventInfo.vehicleId);
+      const selected = vehicles.find(
+        v => v.id === payload.event.eventInfo.vehicleId
+      );
       selected.events.push(payload.event);
-      if(payload.event.eventType == "vrm-change") {
+      if (payload.event.eventType == "vrm-change") {
         selected.vrm = payload.event.eventInfo.toVRM;
       }
       if (devMode) {
         //console.log(`mutation: addEvent: ${payload.event.eventType}`);
-        console.log(`mutation: addEvent:`)
-        console.log(`${payload}`)
+        console.log(`mutation: addEvent:`);
+        console.log(`${payload}`);
       }
     }
   },

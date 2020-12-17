@@ -3,23 +3,31 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-8 aligh-left">
-          <h2 style="color:#37B48C;">{{ info.vehicle }}</h2>  
+          <h2 style="color:#37B48C;">{{ info.vehicle }}</h2>
         </div>
         <div class="col-12 col-md-4 aligh-right">
           <h3>
-            <span class="plain">VRM:</span> 
+            <span class="plain">VRM:</span>
             <span class="numberplate">{{ getLastVRM() }}</span>
-          </h3>    
+          </h3>
         </div>
       </div>
       <div class="row">
         <div class="col-12 col-md-7 aligh-left">
-          <h4 class="pm-0"><span class="plain">Year of Issue:</span> {{ info.year }}</h4>       
-          <h4 class="pm-0"><span class="plain">Registration:</span> {{ registration }}</h4>
+          <h4 class="pm-0">
+            <span class="plain">Year of Issue:</span> {{ info.year }}
+          </h4>
+          <h4 class="pm-0">
+            <span class="plain">Registration:</span> {{ registration }}
+          </h4>
         </div>
         <div class="col-12 col-md-5 aligh-right">
-          <h4 class="pm-0"><span class="plain">Maker:</span> {{ info.madeByBrand }}</h4>
-          <h4 class="pm-0"><span class="plain">Model:</span> {{ info.model }}</h4> 
+          <h4 class="pm-0">
+            <span class="plain">Maker:</span> {{ info.madeByBrand }}
+          </h4>
+          <h4 class="pm-0">
+            <span class="plain">Model:</span> {{ info.model }}
+          </h4>
         </div>
         <div class="col-12 line-container">
           <div class="line" />
@@ -30,7 +38,7 @@
           <h3 class="events-header">
             <span>History</span>
             <button class="add-btn" @click="addEvent()">Add a New Event</button>
-          </h3>          
+          </h3>
           <table style="width: 100%;">
             <tr>
               <th><span>Name</span></th>
@@ -44,7 +52,7 @@
         </div>
       </div>
     </div>
-    <NewEventForm :active="showForm" :id="id" @hide="showForm = false"/>
+    <NewEventForm :active="showForm" :id="id" @hide="showForm = false" />
   </section>
 </template>
 
@@ -67,42 +75,44 @@ export default {
       info: null,
       registration: null,
       showForm: false
-    }
+    };
   },
   computed: {
     ...mapGetters([
       "getVehicleById",
       "defaultMilesPerDay",
       "getLastNumberPlate"
-    ]),
+    ])
   },
   watch: {
     id(value) {
-      this.getInfo(value)  
+      this.getInfo(value);
     }
   },
   created() {
-    this.getInfo()
+    this.getInfo();
   },
   methods: {
-    getInfo (vehicleId) {
+    getInfo(vehicleId) {
       const id = vehicleId || this.id;
       const vehicle = this.getVehicleById(id);
       this.events = vehicle.events;
-      this.info = this.events[0].eventInfo; 
-      this.registration = moment(this.events[0].eventDate).format("Do MMM YYYY");     
+      this.info = this.events[0].eventInfo;
+      this.registration = moment(this.events[0].eventDate).format(
+        "Do MMM YYYY"
+      );
     },
     formatDate(date) {
-      return moment(date).format("Do MMM YYYY"); 
+      return moment(date).format("Do MMM YYYY");
     },
     fromNow(date) {
       var a = moment(date);
       var today = moment();
-      return today.diff(a, 'days') // https://momentjs.com/docs/#/displaying/difference/
+      return today.diff(a, "days"); // https://momentjs.com/docs/#/displaying/difference/
     },
     mileageFromNow(date) {
-      const days = this.fromNow(date)
-      return Math.round(days * this.defaultMilesPerDay).toLocaleString() // .toFixed(2)
+      const days = this.fromNow(date);
+      return Math.round(days * this.defaultMilesPerDay).toLocaleString(); // .toFixed(2)
     },
     addEvent() {
       this.showForm = true;
@@ -110,7 +120,7 @@ export default {
     getLastVRM() {
       const vId = this.id;
       return this.getLastNumberPlate(vId);
-    },
+    }
   }
 };
 </script>
@@ -141,7 +151,7 @@ span.info {
   height: 1px;
 }
 .line {
-  border-bottom: 1px solid #37B48C;
+  border-bottom: 1px solid #37b48c;
   padding: 10px 0px;
 }
 .pm-0 {
@@ -166,29 +176,29 @@ span.info {
   display: block;
   float: right;
   padding: 0.35em 1.2em;
-  border: 0.1em solid #37B48C;
+  border: 0.1em solid #37b48c;
   /* margin: 0 0.3em 0.3em 20px; */
   border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  color: #37B48C;
+  color: #37b48c;
   background: transparent;
   text-align: center;
   transition: all 0.2s;
 }
-.add-btn:hover{
-  color:white;
-  background-color:#37B48C;
+.add-btn:hover {
+  color: white;
+  background-color: #37b48c;
 }
-@media all and (max-width:30em){
+@media all and (max-width: 30em) {
   .add-btn {
     display: block;
     margin: 0.4em auto;
   }
 }
 th {
-  color: #37B48C;
+  color: #37b48c;
 }
 </style>
