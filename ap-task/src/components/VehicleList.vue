@@ -6,11 +6,11 @@
         v-for="(v, i) in getVehicles" 
         :key="v.id" 
         class="vehicle-list-item"
-        @click="showInfo(v.id)"
+        @click="showInfoCard(v.id)"
       >
         <span class="listNumber">{{ i+1 }}</span>
         <span style="color:#37B48C;">{{ v.events[0].eventInfo.vehicle }}</span>
-        <span class="numberplate"><b>{{ v.events[0].eventInfo.vrm }}</b></span>
+        <span class="numberplate"><b>{{ v.vrm }}</b></span>
       </li>
     </ol>
     <button class="reg-btn" @click="regNewVehicle()">Register a new Vehicle</button>
@@ -46,7 +46,7 @@ export default {
     getInfo(vehicle) {
       return vehicle.events[0].eventInfo
     },
-    showInfo(id) {
+    showInfoCard(id) {
       this.$emit('onShowInfo', id)
     }
   }

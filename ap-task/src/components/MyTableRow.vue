@@ -2,6 +2,9 @@
   <tr>
     <td>
       <span class="text-bold">{{ event.eventTitle }}</span><br>
+      <span v-if="event.eventType === 'registration'">
+        VRM: {{ event.eventInfo.vrm }}
+      </span>
       <span v-if="event.eventType === 'ad'">
         ${{ Number(event.eventInfo.price).toLocaleString() }}
       </span>
@@ -9,7 +12,7 @@
         Result: {{ event.eventInfo.result }}
       </span>
       <span v-if="event.eventType === 'vrm-change'">
-        New: {{ event.eventInfo.toVRM }}
+        VRM: {{ event.eventInfo.toVRM }}
       </span>
     </td>
     <td>

@@ -115,7 +115,7 @@
             <span>Previous VRM</span>
           </td>
           <td>
-            <span>{{ getLastNumberPlate() }}</span>
+            <span>{{ getLastVRM() }}</span>
           </td>
         </tr>
         <tr v-if="selectedEventTitle == eventTypes[2].title">
@@ -189,27 +189,15 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "getVehicleById"
+      "getVehicleById",
+      "getLastNumberPlate"
     ]),
   },
   methods: {
     ...mapActions(["addEvent"]),
-    getLastNumberPlate() {
-      const VRMchangeCode = 2;
+    getLastVRM() {
       const vId = this.id;
-      const events = this.getVehicleById(vId).events;
-      const regVRM = events[0].eventInfo.vrm;
-      console.log("regVRM: " + regVRM);
-      let lastVRMchangeEvent = null;
-      for (var i = events.length - 1; i >= 0; i--) {
-        const eventType = events[i].eventType;
-        if (eventType === this.eventTypes[VRMchangeCode].type) {
-          lastVRMchangeEvent = events[i];
-          break; //stop searching  
-        }
-      }
-      if (lastVRMchangeEvent) console.log("last VRM: " + lastVRMchangeEvent.eventInfo.toVRM);
-      return lastVRMchangeEvent ? lastVRMchangeEvent.eventInfo.toVRM : regVRM;
+      return this.getLastNumberPlate(vId);
     },
     reset() {
       this.selectedEventTitle = null;
@@ -261,7 +249,7 @@ export default {
         eventDate: this.eventDate,
         eventInfo: {
           vehicleId: this.id,
-          fromVRM: this.getLastNumberPlate(),
+          fromVRM: this.getLastVRM(),
           toVRM: this.vrmChangeEvent.toVRM,
         }
       }

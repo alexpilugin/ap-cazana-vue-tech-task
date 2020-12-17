@@ -8,8 +8,8 @@
         <div class="col-12 col-md-4 aligh-right">
           <h3>
             <span class="plain">VRM:</span> 
-            <span class="numberplate">{{ info.vrm }}</span>
-          </h3>        
+            <span class="numberplate">{{ getLastVRM() }}</span>
+          </h3>    
         </div>
       </div>
       <div class="row">
@@ -72,7 +72,8 @@ export default {
   computed: {
     ...mapGetters([
       "getVehicleById",
-      "defaultMilesPerDay"
+      "defaultMilesPerDay",
+      "getLastNumberPlate"
     ]),
   },
   watch: {
@@ -86,7 +87,8 @@ export default {
   methods: {
     getInfo (vehicleId) {
       const id = vehicleId || this.id;
-      this.events = this.getVehicleById(id).events;
+      const vehicle = this.getVehicleById(id);
+      this.events = vehicle.events;
       this.info = this.events[0].eventInfo; 
       this.registration = moment(this.events[0].eventDate).format("Do MMM YYYY");     
     },
@@ -104,7 +106,11 @@ export default {
     },
     addEvent() {
       this.showForm = true;
-    }
+    },
+    getLastVRM() {
+      const vId = this.id;
+      return this.getLastNumberPlate(vId);
+    },
   }
 };
 </script>
