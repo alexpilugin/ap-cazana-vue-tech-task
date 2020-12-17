@@ -14,6 +14,6 @@ npm start
 ```
 
 ## Screenshots
-![Interface](ap-cazana-vue-tech-task/blob/master/assets/Interface.png "Interface.png")
+![Interface](https://github.com/alexpilugin/ap-cazana-vue-tech-task/blob/main/assets/Interface-screenshot.png "Interface.png")
 
-![Dialogs](ap-cazana-vue-tech-task/blob/master/assets/Dialogs.png "Dialogs.png")
+![Dialogs](https://github.com/alexpilugin/ap-cazana-vue-tech-task/blob/main/assets/Dialogs.png "Dialogs.png")
