@@ -1,30 +1,28 @@
 <template>
   <tr>
     <td>
-      <span>{{ event.eventTitle }}</span><br>
+      <span class="text-bold">{{ event.eventTitle }}</span><br>
       <span 
         v-if="event.eventType === 'ad'"
       >
         ${{ Number(event.eventInfo.price).toLocaleString() }}
+      </span>
+      <span 
+        v-if="event.eventType === 'mot'"
+      >
+        Result: {{ event.eventInfo.result }}
       </span>
     </td>
     <td>
       <span>{{ formatDate(event.eventDate) }}</span>
     </td>
     <td>
-      <span>{{ fromNow(event.eventDate) }}</span>
+      <span>{{ daysTillNow(event.eventDate) }}</span>
     </td>
     <td>
-      <span 
-        v-if="event.eventType === 'registration'"
-      >
-        {{ mileageFromNow(event.eventDate) }}
-      </span>
-      <span 
-        v-if="event.eventType === 'ad'"
-      >
-        {{ getMileageFromAdEvent() }}
-      </span>
+      <span v-if="event.eventType === 'registration'">{{ defaultMileageTillNow(event.eventDate) }}</span>
+      <span v-if="event.eventType === 'ad'">{{ getMileageFromEvent() }}</span>
+      <span v-if="event.eventType === 'mot'">{{ getMileageFromEvent() }}</span>
     </td>
   </tr>
 
@@ -56,36 +54,38 @@ export default {
     getInfo () {
       const id = this.event.eventInfo.vehicleId;
       const regDate = this.getVehicleById(id).events[0].eventDate;
-      let reg = moment(regDate);
+      const reg = moment(regDate);
       this.registration = reg.format("Do MMM YYYY"); 
-      let eventDate = moment(this.event.eventDate);
+      const eventDate = moment(this.event.eventDate);
       this.daysFromReg = eventDate.diff(reg, "days");   
     },
     formatDate(date) {
       return moment(date).format("Do MMM YYYY");
     },
-    fromNow(date) {
+    daysTillNow(date) {
       let a = moment(date);
       let today = moment();
       return today.diff(a, "days"); // https://momentjs.com/docs/#/displaying/difference/
     },
-    mileageFromNow(date) {
-      const days = this.fromNow(date);
+    defaultMileageTillNow(date) {
+      const days = this.daysTillNow(date);
       return Math.round(days * this.defaultMilesPerDay).toLocaleString(); // .toFixed(2)
     },
-    getMileageFromAdEvent() {
+    getMileageFromEvent() {
       if(this.event) {
-        const days = this.fromNow(this.event.eventDate);
-        const m = Number(this.event.eventInfo.mileage);
-        const id = this.event.eventInfo.vehicleId;
-        const reg = moment(this.getVehicleById(id).events[0].eventDate)
         const eventDate = moment(this.event.eventDate);
-        const daysFromRegTillEvent = eventDate.diff(reg, "days")
-        if(days == 0) {
+        const daysAfterEvent = this.daysTillNow(this.event.eventDate);
+        const m = Number(this.event.eventInfo.mileage);
+        const vId = this.event.eventInfo.vehicleId;
+        const regDate = this.getVehicleById(vId).events[0].eventDate;
+        const daysFromRegToEvent = eventDate.diff(regDate, "days");
+        if(daysAfterEvent == 0) {
+          console.log("daysAfterEvent: "+ daysAfterEvent + " miles: " +m);
           return Math.round(m).toLocaleString();
         } else {
-          const averageMilesPerDay = Math.abs(m / daysFromRegTillEvent);
-          const result = days * averageMilesPerDay + m;
+          console.log("daysAfterEvent: "+ daysAfterEvent + " miles: " +m);
+          const averageMilesPerDay = Math.abs(m / daysFromRegToEvent);
+          const result = daysAfterEvent * averageMilesPerDay + m;
           return Math.round(result).toLocaleString();
         }
       }
@@ -95,4 +95,7 @@ export default {
 </script>
 
 <style>
+.text-bold {
+  font-weight: bold;
+}
 </style>

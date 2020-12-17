@@ -38,8 +38,8 @@
             />
           </td>
         </tr>
+        <!-- ad -->
         <tr v-if="selectedEventTitle == eventTypes[0].title">
-          <!-- ad -->
           <td>
             <label for="mileage">Mileage</label>
           </td>
@@ -69,17 +69,56 @@
             />
           </td>
         </tr>
+        <tr v-if="selectedEventTitle == eventTypes[0].title">
+          <td> <button @click.prevent="cancel()">Cancel</button></td>
+          <td> <button @click.prevent="saveAdEvent()">Save</button></td>
+        </tr>
+
+        <!-- MOT -->
         <tr v-if="selectedEventTitle == eventTypes[1].title">
-          <td colspan="2">
-            <label for="eventType"><h4>{{ selectedEventTitle }}</h4></label>
+          <td>
+            <label for="mileage">Mileage</label>
+          </td>
+          <td>
+            <input
+              type="number"
+              id="mileage"
+              name="mileage"
+              v-model="motEvent.mileage"
+              min="0"
+              max="1000"
+              step="10"
+              style="width: 100%"
+            />
           </td>
         </tr>
+        <tr v-if="selectedEventTitle == eventTypes[1].title">
+          <td>
+            <label for="checkbox">Result</label>
+          </td>
+          <td>
+            <input type="radio" id="pass" value="pass" v-model="motEvent.result">
+            <label for="pass">pass</label>
+            <input type="radio" id="fail" value="fail" style="margin-left: 15px;" v-model="motEvent.result">
+            <label for="fail">fail</label>
+          </td>
+        </tr>
+
+        <tr v-if="selectedEventTitle == eventTypes[1].title">
+          <td> <button @click.prevent="cancel()">Cancel</button></td>
+          <td> <button @click.prevent="saveMotEvent()">Save</button></td>
+        </tr>
+
+
+
+
         <tr v-if="selectedEventTitle == eventTypes[2].title">
           <td colspan="2">
             <label for="eventType"><h4>{{ selectedEventTitle }}</h4></label>
           </td>
         </tr>
-        <tr v-if="selectedEventTitle == eventTypes[0].title">
+
+        <tr v-if="selectedEventTitle == eventTypes[2].title">
           <td> <button @click.prevent="cancel()">Cancel</button></td>
           <td> <button @click.prevent="saveAdEvent()">Save</button></td>
         </tr>
@@ -122,6 +161,14 @@ export default {
       adEvent: {
         mileage: 0,
         price: 0
+      },
+      motEvent: {
+        mileage: 0,
+        result: undefined /* Pass / Fail */
+      },
+      vrmChangeEvent: {
+        fromVRM: '',
+        toVRM: ''
       }
     }
   },
@@ -139,7 +186,6 @@ export default {
       this.$emit('hide')
     },
     saveAdEvent() {
-      console.log("saveAdEvent")
       const newEvent = {
         eventTitle: this.eventTypes[0].title,
         eventType: this.eventTypes[0].type,
@@ -150,8 +196,22 @@ export default {
           price: this.adEvent.price,
         }
       }
-      console.log(newEvent)
-      console.log("-------------------------")
+      this.addEvent({event: newEvent})
+      this.reset()
+      this.$emit('hide')
+    },
+    saveMotEvent() {
+      console.log("saveMotEvent...")
+      const newEvent = {
+        eventTitle: this.eventTypes[1].title,
+        eventType: this.eventTypes[1].type,
+        eventDate: this.eventDate,
+        eventInfo: {
+          vehicleId: this.id,
+          mileage: this.motEvent.mileage,
+          result: this.motEvent.result,
+        }
+      }
       this.addEvent({event: newEvent})
       this.reset()
       this.$emit('hide')

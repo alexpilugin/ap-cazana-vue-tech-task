@@ -181,4 +181,7 @@ span.info {
     margin: 0.4em auto;
   }
 }
+th {
+  color: #37B48C;
+}
 </style>
