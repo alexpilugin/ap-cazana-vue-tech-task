@@ -1,5 +1,7 @@
 # ap-task
 
+This application creates car history, calculates - predicts mileage based on the last entered data.   
+
 This is my solution for Cazana company to show my skills with Vue.js and Vuex.   
 This application created with [VUE CLI](https://cli.vuejs.org).
 Also I used [Moment.js](https://momentjs.com) and Bootstrap Grid: [bootstrap-grid.min.css](https://getbootstrap.com/docs/4.1/getting-started/contents/#css-files)
