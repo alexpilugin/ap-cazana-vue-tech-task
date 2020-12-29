@@ -58,6 +58,25 @@ export default new Vuex.Store({
       }
       // return a closure function:
       return getById;
+    },
+    getEvent: state => {
+      const vehicles =
+      state.vehicles.length && state.vehicles.length > 0
+        ? state.vehicles
+        : undefined;
+      function getByIds(vId, eId) {
+        if (vehicles) {
+          console.log("getter getEvent: ...........")
+          const selected = vehicles.find(v => v.id === vId); // first found
+          const events = selected.events;
+          const e = events.find(ev => ev.eventId === eId); // first found
+          console.log("getEvent: ")
+          console.log(e);
+          return e;
+        }
+      }
+      // return a closure function:
+      return getByIds;
     }
   },
   mutations: {
@@ -85,11 +104,23 @@ export default new Vuex.Store({
         console.log(`mutation: addEvent:`);
         console.log(`${payload}`);
       }
+    },
+    updateEvent(state, payload) {
+      const vehicles = state.vehicles;
+      const vId = payload.event.eventInfo.vehicleId;
+      const selected = vehicles.find(v => v.id === vId);
+      const eId = payload.event.eventId;
+      let event = selected.events.find(e => e.eventId === eId);
+      Object.assign(event, payload.event); // make it reactive
+      if (devMode) {
+        console.log(`mutation: updateEvent:`, payload); 
+      }
     }
   },
   actions: {
     register: (context, info) => context.commit("addVehicle", info),
-    addEvent: (context, payload) => context.commit("addEvent", payload)
+    addEvent: (context, payload) => context.commit("addEvent", payload),
+    updateEvent: (context, payload) => context.commit("updateEvent", payload),
   },
   modules: {}
 });

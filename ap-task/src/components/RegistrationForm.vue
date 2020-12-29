@@ -25,21 +25,6 @@
         </tr>
         <tr>
           <td>
-            <label for="vrm">VRM (numberplate)</label>
-          </td>
-          <td>
-            <input
-              type="text"
-              id="vrm"
-              name="vrm"
-              :value="vrm.toUpperCase()"
-              @input="vrm = $event.target.value.toUpperCase()"
-              style="text-transform: uppercase"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
             <label for="maker">Maker</label>
           </td>
           <td>
@@ -52,6 +37,21 @@
           </td>
           <td>
             <input type="text" id="model" name="model" v-model="model" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="vrm">VRM (numberplate)</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              id="vrm"
+              name="vrm"
+              :value="vrm.toUpperCase()"
+              @input="vrm = $event.target.value.toUpperCase()"
+              style="text-transform: uppercase"
+            />
           </td>
         </tr>
         <tr>
@@ -110,7 +110,6 @@ export default {
   },
   data() {
     return {
-      show: false,
       vehicle: "",
       vrm: "",
       maker: "",
@@ -131,7 +130,6 @@ export default {
   methods: {
     ...mapActions(["register"]),
     reset() {
-      this.show = false;
       this.vehicle = "";
       this.vrm = "";
       this.maker = "";
@@ -142,7 +140,6 @@ export default {
       this.year = new Date().getFullYear();
     },
     cancel() {
-      this.show = false;
       this.reset();
       this.$emit("hide");
     },
@@ -152,6 +149,7 @@ export default {
         eventTitle: "First Registration",
         eventType: "registration",
         eventDate: moment(this.regDate),
+        eventId: v4(),
         eventInfo: {
           vehicleId: v4(),
           vehicle: this.vehicle,

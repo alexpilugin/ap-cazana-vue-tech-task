@@ -153,6 +153,12 @@
             <button class="submit" @click.prevent="saveVRMEvent()">Save</button>
           </td>
         </tr>
+
+        <tr v-if="!selectedEventTitle">
+          <td colspan="2">
+            <button style="width: 100%; padding: 5px;" @click.prevent="cancel()">Cancel</button> 
+          </td>
+        </tr>
       </table>
     </form>
   </ModalScreen>
@@ -162,6 +168,7 @@
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
 import ModalScreen from "@/components/ModalScreen.vue";
+const { v4 } = require("uuid");
 
 export default {
   name: "NewEventForm",
@@ -171,7 +178,6 @@ export default {
   },
   data() {
     return {
-      show: false,
       selectedEventTitle: null,
       eventTypes: [
         {
@@ -228,6 +234,7 @@ export default {
         eventTitle: this.eventTypes[0].title,
         eventType: this.eventTypes[0].type,
         eventDate: this.eventDate,
+        eventId: v4(),
         eventInfo: {
           vehicleId: this.id,
           mileage: this.adEvent.mileage,
@@ -244,6 +251,7 @@ export default {
         eventTitle: this.eventTypes[1].title,
         eventType: this.eventTypes[1].type,
         eventDate: this.eventDate,
+        eventId: v4(),
         eventInfo: {
           vehicleId: this.id,
           mileage: this.motEvent.mileage,
@@ -260,6 +268,7 @@ export default {
         eventTitle: this.eventTypes[2].title,
         eventType: this.eventTypes[2].type,
         eventDate: this.eventDate,
+        eventId: v4(),
         eventInfo: {
           vehicleId: this.id,
           fromVRM: this.getLastVRM(),

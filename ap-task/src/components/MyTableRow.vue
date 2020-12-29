@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="event-row" @click.stop="showEditForm($event)">
     <td>
       <span class="text-bold">{{ event.eventTitle }}</span
       ><br />
@@ -34,18 +34,29 @@
       <span v-if="event.eventType === 'vrm-change'">-</span>
       <span v-else>{{ getAnnualAverageMiles() }}</span>
     </td>
+    <EditEventForm 
+      :active="showForm" 
+      :vId="vehicleId"
+      :eId="eventId"
+      @hide="closeEditForm" 
+    />
   </tr>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import moment from "moment";
+import EditEventForm from "@/components/EditEventForm.vue";
 
 export default {
   name: "MyTableRow",
   props: ["event"],
+  components: {
+    EditEventForm
+  },
   data() {
     return {
+      showForm: false,
       registration: null,
       daysFromReg: null
     };
@@ -58,9 +69,22 @@ export default {
       "getVehicleById",
       "defaultMilesPerDay",
       "defaultMilesPerAnnum"
-    ])
+    ]),
+    vehicleId() {
+      return this.event.eventInfo.vehicleId;
+    },
+    eventId() {
+      return this.event.eventId;
+    },
   },
   methods: {
+    showEditForm(event) {
+      if(event.target.tagName.toLowerCase() === 'button') return
+      this.showForm = true 
+    },
+    closeEditForm() {
+      this.showForm = false
+    },
     getInfo() {
       const id = this.event.eventInfo.vehicleId;
       const regDate = this.getVehicleById(id).events[0].eventDate;
@@ -132,5 +156,11 @@ export default {
 <style>
 .text-bold {
   font-weight: bold;
+}
+.event-row {
+  cursor: pointer;
+}
+.event-row:hover {
+  background-color: #fafafae0;
 }
 </style>
