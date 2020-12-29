@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: '/ap-cazana-vue-tech-task/',
   pluginOptions: {
     prerenderSpa: {
       registry: undefined,
