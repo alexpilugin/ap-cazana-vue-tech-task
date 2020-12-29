@@ -61,16 +61,16 @@ export default new Vuex.Store({
     },
     getEvent: state => {
       const vehicles =
-      state.vehicles.length && state.vehicles.length > 0
-        ? state.vehicles
-        : undefined;
+        state.vehicles.length && state.vehicles.length > 0
+          ? state.vehicles
+          : undefined;
       function getByIds(vId, eId) {
         if (vehicles) {
-          console.log("getter getEvent: ...........")
+          console.log("getter getEvent: ...........");
           const selected = vehicles.find(v => v.id === vId); // first found
           const events = selected.events;
           const e = events.find(ev => ev.eventId === eId); // first found
-          console.log("getEvent: ")
+          console.log("getEvent: ");
           console.log(e);
           return e;
         }
@@ -106,21 +106,24 @@ export default new Vuex.Store({
       }
     },
     updateEvent(state, payload) {
+      if (devMode) {
+        console.log(`mutation: updateEvent:`, payload);
+      }
       const vehicles = state.vehicles;
       const vId = payload.event.eventInfo.vehicleId;
-      const selected = vehicles.find(v => v.id === vId);
+      const selectedVehicle = vehicles.find(v => v.id === vId);
       const eId = payload.event.eventId;
-      let event = selected.events.find(e => e.eventId === eId);
-      Object.assign(event, payload.event); // make it reactive
-      if (devMode) {
-        console.log(`mutation: updateEvent:`, payload); 
+      let event = selectedVehicle.events.find(e => e.eventId === eId);
+      if (payload.event.eventInfo.vrm) {
+        selectedVehicle.vrm = payload.event.eventInfo.vrm;
       }
+      Object.assign(event, payload.event); // make it reactive
     }
   },
   actions: {
     register: (context, info) => context.commit("addVehicle", info),
     addEvent: (context, payload) => context.commit("addEvent", payload),
-    updateEvent: (context, payload) => context.commit("updateEvent", payload),
+    updateEvent: (context, payload) => context.commit("updateEvent", payload)
   },
   modules: {}
 });

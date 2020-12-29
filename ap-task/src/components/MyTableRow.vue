@@ -34,11 +34,11 @@
       <span v-if="event.eventType === 'vrm-change'">-</span>
       <span v-else>{{ getAnnualAverageMiles() }}</span>
     </td>
-    <EditEventForm 
-      :active="showForm" 
+    <EditEventForm
+      :active="showForm"
       :vId="vehicleId"
       :eId="eventId"
-      @hide="closeEditForm" 
+      @hide="closeEditForm"
     />
   </tr>
 </template>
@@ -75,15 +75,15 @@ export default {
     },
     eventId() {
       return this.event.eventId;
-    },
+    }
   },
   methods: {
     showEditForm(event) {
-      if(event.target.tagName.toLowerCase() === 'button') return
-      this.showForm = true 
+      if (event.target.tagName.toLowerCase() === "button") return;
+      this.showForm = true;
     },
     closeEditForm() {
-      this.showForm = false
+      this.showForm = false;
     },
     getInfo() {
       const id = this.event.eventInfo.vehicleId;

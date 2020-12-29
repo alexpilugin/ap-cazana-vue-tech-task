@@ -156,7 +156,12 @@
 
         <tr v-if="!selectedEventTitle">
           <td colspan="2">
-            <button style="width: 100%; padding: 5px;" @click.prevent="cancel()">Cancel</button> 
+            <button
+              style="width: 100%; padding: 5px;"
+              @click.prevent="cancel()"
+            >
+              Cancel
+            </button>
           </td>
         </tr>
       </table>
