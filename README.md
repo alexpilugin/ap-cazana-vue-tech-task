@@ -6,6 +6,10 @@ This is my solution for Cazana company to show my skills with Vue.js and Vuex.
 This application created with [VUE CLI](https://cli.vuejs.org).
 Also I used [Moment.js](https://momentjs.com) and Bootstrap Grid: [bootstrap-grid.min.css](https://getbootstrap.com/docs/4.1/getting-started/contents/#css-files)
 
+Demo: [https://alexpilugin.github.io/ap-cazana-vue-tech-task/](https://alexpilugin.github.io/ap-cazana-vue-tech-task/)
+
+This application uses native html **[input[type="date"]](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date)** element, but this HTML5 date picker doesn't work on Safari (Apple Desktop Browser). 
+
 ## Project setup
 ```
 npm run setup
