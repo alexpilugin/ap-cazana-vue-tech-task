@@ -8,7 +8,7 @@ Also I used [Moment.js](https://momentjs.com) and Bootstrap Grid: [bootstrap-gri
 
 Demo: [https://alexpilugin.github.io/ap-cazana-vue-tech-task/](https://alexpilugin.github.io/ap-cazana-vue-tech-task/)
 
-This application uses native html **[input[type="date"]](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date)** element, but this HTML5 date picker doesn't work on Safari (Apple Desktop Browser). 
+This application uses native html **[input[type="date"]](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date)** element, but this HTML5 date picker doesn't work on Safari (Apple Desktop Browser). Check availability on [caniuse.com](https://caniuse.com/?search=input%20date)
 
 ## Project setup
 ```
